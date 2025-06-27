@@ -27,80 +27,76 @@ app.use(express.urlencoded());
 // set up the static files
 app.use(express.static('assets'));
 
-
 // registering the user in the database
 app.post('/register', (req, res) => {
-    Register.create({
-        name: req.body.name,
-        lastName: req.body.lastName,
-        phone: req.body.phone,
-        email: req.body.email,
-        password: req.body.password
-    })
+  Register.create({
+    name: req.body.name,
+    lastName: req.body.lastName,
+    phone: req.body.phone,
+    email: req.body.email,
+    password: req.body.password,
+  })
     .then(user => {
-        console.log("Successfully Created user!", user);
-        res.redirect('/dashboard');
+      console.log('Successfully Created user!', user);
+      res.redirect('/dashboard');
     })
     .catch(err => {
-        console.log("Error Creating user!!", err);
-        res.status(500).send("Error Creating user!!");
+      console.log('Error Creating user!!', err);
+      res.status(500).send('Error Creating user!!');
     });
 });
 
 // adding the task to the database
-app.post('/addtask', function(req,res){
-    Dashboard.create({
-        task : req.body.task,
-        date : req.body.date,
-        description : req.body.description,
-        time : req.body.time,
-        categoryChoosed : req.body.categoryChoosed
-    })
+app.post('/addtask', function (req, res) {
+  Dashboard.create({
+    task: req.body.task,
+    date: req.body.date,
+    description: req.body.description,
+    time: req.body.time,
+    categoryChoosed: req.body.categoryChoosed,
+  })
     .then(newTask => {
-        console.log("Successfully Created Task!", newTask);
-        res.redirect('back');
+      console.log('Successfully Created Task!', newTask);
+      res.redirect('back');
     })
     .catch(err => {
-        console.log("Error Creating Task!!", err);
-        // res.status(500).send("Error Creating Task!!");
-        res.redirect('back');
+      console.log('Error Creating Task!!', err);
+      // res.status(500).send("Error Creating Task!!");
+      res.redirect('back');
     });
 });
 
 // complate the task to the database
-app.get('/complete-task', function(req,res){
-    let id = req.query.id;
-    Dashboard.findByIdAndUpdate(id, {completed: true})
+app.get('/complete-task', function (req, res) {
+  let id = req.query.id;
+  Dashboard.findByIdAndUpdate(id, { completed: true })
     .then(newTask => {
-        console.log("Successfully Complated Task!", newTask);
-        res.redirect('back');
+      console.log('Successfully Complated Task!', newTask);
+      res.redirect('back');
     })
     .catch(err => {
-        console.log("Error Complating Task!!", err);
-        res.redirect('back');
+      console.log('Error Complating Task!!', err);
+      res.redirect('back');
     });
 });
-
 
 // deleting the task to the database
-app.get('/delete-task', function(req,res){
-    let id = req.query.id;
-    Dashboard.findByIdAndDelete(id)
+app.get('/delete-task', function (req, res) {
+  let id = req.query.id;
+  Dashboard.findByIdAndDelete(id)
     .then(newTask => {
-        console.log("Successfully Deleted Task!", newTask);
-        res.redirect('back');
+      console.log('Successfully Deleted Task!', newTask);
+      res.redirect('back');
     })
     .catch(err => {
-        console.log("Error Deleting Task!!", err);
-        res.redirect('back');
+      console.log('Error Deleting Task!!', err);
+      res.redirect('back');
     });
-
 });
 
-
-app.listen(port,(err) => {
-    if (err) {
-        console.log(`Error: ${err}`);
-    }
-    console.log(`Yupp! Server is running on port ${port}`);
-})
+app.listen(port, err => {
+  if (err) {
+    console.log(`Error: ${err}`);
+  }
+  console.log(`Yupp! Server is running on port ${port}`);
+});

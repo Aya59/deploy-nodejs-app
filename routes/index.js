@@ -10,7 +10,7 @@ const completedtaskController = require('../controllers/completedtaskController'
 console.log('Router loaded');
 
 router.get('/', homeController.home);
-router.get('/dashboard', dashboardController.dashboard)
+router.get('/dashboard', dashboardController.dashboard);
 router.get('/register', registerController.register);
 router.get('/alltask', alltaskController.alltask);
 router.get('/completedtask', completedtaskController.completedtask);
